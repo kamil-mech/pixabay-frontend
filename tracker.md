@@ -25,10 +25,10 @@ Project Day 0
 [~] PXB-1 Setup the repo * https://kmech.atlassian.net/browse/PXB-1
     [x] React (create-react-app)
     [x] Typescript & linting
-    [ ] Atomic design
-    [ ] Dummy Components
-    [ ] Router
+    [x] Atomic design
+    [x] Dummy Components
     [ ] Localization (i18next)
+    [ ] Router
     [ ] Style (styled-components) & Theme
     [ ] Store (zustand)
     [ ] Local storage (localforage)
