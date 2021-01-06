@@ -28,12 +28,12 @@ Project Day 0
     [x] Atomic design
     [x] Dummy Components
     [x] Localization (i18next)
-    [ ] Router
+    [x] Router
     [ ] Style (styled-components) & Theme
     [ ] Store (zustand)
     [ ] Local storage (localforage)
     [ ] Storybook
-    [ ] Unit tests (jest, react-testing-library, msw)
+    [~] Unit tests (jest, react-testing-library, msw)
     [ ] Document architectural decisions
 [ ] PXB-2 Landing page * https://kmech.atlassian.net/browse/PXB-2
     [ ] Fetch images from Pixabay API
@@ -46,4 +46,5 @@ Project Day 0
     [ ] Display details (photographer, tags, views, downloads, size)
 
 # Appendix (things I learned and reading TODOs)
-- 
+- Be careful of accidentally nesting routers, causes hard to find bugs
+- There must be a bug in react-testing-library, as using a regex on sibling items (e.g /Photos|Illustrations|Vectors|Videos|Music/gi) skips every 2nd item. This can be mitigated by increasing DOM nesting or introducing an interim DOM element as a separator between them

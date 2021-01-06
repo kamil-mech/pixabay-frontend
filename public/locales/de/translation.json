@@ -9,5 +9,7 @@
   "join": "Beitreten",
   "upload": "Hochladen",
   "hello-world": "Hallo Welt",
-  "footer": "Fusszeile"
+  "footer": "Fusszeile",
+  "page-not-found": "Entschuldigung, die gesuchte Seite fehlt",
+  "image-description": "Bildbeschreibung"
 }

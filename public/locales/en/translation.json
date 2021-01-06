@@ -9,5 +9,7 @@
   "join": "Join",
   "upload": "Upload",
   "hello-world": "Hello World",
-  "footer": "Footer"
+  "footer": "Footer",
+  "page-not-found": "Sorry, the page you are looking for is missing",
+  "image-description": "Image Description"
 }
