@@ -24,7 +24,7 @@ Project Day 0
 [x] Setup jira
 [~] PXB-1 Setup the repo * https://kmech.atlassian.net/browse/PXB-1
     [x] React (create-react-app)
-    [ ] Typescript & linting
+    [x] Typescript & linting
     [ ] Atomic design
     [ ] Dummy Components
     [ ] Router
