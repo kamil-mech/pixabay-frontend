@@ -23,7 +23,7 @@ Project Day 0
 * - JIRA updated after merge
 [x] Setup jira
 [~] PXB-1 Setup the repo * https://kmech.atlassian.net/browse/PXB-1
-    [ ] React (create-react-app)
+    [x] React (create-react-app)
     [ ] Typescript & linting
     [ ] Atomic design
     [ ] Dummy Components
