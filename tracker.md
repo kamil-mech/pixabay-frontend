@@ -27,7 +27,7 @@ Project Day 0
     [x] Typescript & linting
     [x] Atomic design
     [x] Dummy Components
-    [ ] Localization (i18next)
+    [x] Localization (i18next)
     [ ] Router
     [ ] Style (styled-components) & Theme
     [ ] Store (zustand)

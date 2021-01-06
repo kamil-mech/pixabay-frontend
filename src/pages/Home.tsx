@@ -1,11 +1,13 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 import HomeLayout from 'templates/HomeLayout'
 
 const Home = (): JSX.Element => {
+  const { t } = useTranslation()
   return (
     <HomeLayout>
-      Hello World
+      {t('hello-world')}
     </HomeLayout>
   )
 }
