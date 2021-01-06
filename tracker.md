@@ -29,10 +29,10 @@ Project Day 0
     [x] Dummy Components
     [x] Localization (i18next)
     [x] Router
+    [x] Storybook
     [ ] Style (styled-components) & Theme
     [ ] Store (zustand)
     [ ] Local storage (localforage)
-    [ ] Storybook
     [~] Unit tests (jest, react-testing-library, msw)
     [ ] Document architectural decisions
 [ ] PXB-2 Landing page * https://kmech.atlassian.net/browse/PXB-2

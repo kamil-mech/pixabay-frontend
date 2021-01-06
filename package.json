@@ -6,9 +6,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint --ext ts,tsx src --fix",
+    "lint": "eslint --ext ts,tsx src .storybook --fix",
     "test": "react-scripts test",
-    "browserslist": "browserslist"
+    "browserslist": "browserslist",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
@@ -97,10 +99,10 @@
       "@typescript-eslint/strict-boolean-expressions": "off"
     }
   },
-  "browserslist": [	
-    "defaults",	
-    "not IE 11",	
-    "maintained node versions"	
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
   ],
   "dependencies": {
     "babel-plugin-root-import": "^6.6.0",
@@ -114,6 +116,12 @@
     "react-scripts": "4.0.1"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^6.1.11",
+    "@storybook/addon-essentials": "^6.1.11",
+    "@storybook/addon-links": "^6.1.11",
+    "@storybook/node-logger": "^6.1.11",
+    "@storybook/preset-create-react-app": "^3.1.5",
+    "@storybook/react": "^6.1.11",
     "@testing-library/dom": "^7.29.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",

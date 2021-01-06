@@ -41,8 +41,8 @@ export const mockedAPIs = [
   rest.get('/locales/en/translation.json', async (req, res, ctx) => {
     return await res(ctx.json(enTranslation))
   }),
+  // Useful for HMR in Storybook
   rest.get('*', async (req, res, ctx) => {
-    console.log('intercepted', req)
-    return await res(ctx.json(enTranslation))
+    return await res(ctx.fetch(req))
   })
 ]
