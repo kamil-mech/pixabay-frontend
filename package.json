@@ -97,18 +97,11 @@
       "@typescript-eslint/strict-boolean-expressions": "off"
     }
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [	
+    "defaults",	
+    "not IE 11",	
+    "maintained node versions"	
+  ],
   "dependencies": {
     "babel-plugin-root-import": "^6.6.0",
     "i18next": "^19.8.4",
