@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import Logo from './Logo'
 import CaretIcon from './CaretIcon'
 import UploadIcon from './Upload'
+import BurgerIcon from './BurgerIcon'
 
 const meta: Meta = {
   title: 'atoms/Icons'
@@ -22,7 +23,7 @@ const Track = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   > * + * {
-    margin-left: 8px;
+    margin: 8px;
   }
 `
 export const Default = (): JSX.Element => (
@@ -31,6 +32,7 @@ export const Default = (): JSX.Element => (
       <Logo />
       <UploadIcon />
       <CaretIcon />
+      <BurgerIcon />
     </Track>
   </Background>
 )

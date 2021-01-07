@@ -1,9 +1,9 @@
 import { setupTestRenderer, mockedAPIs } from 'test-utils'
 
 import { setupWorker } from 'msw'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
+import * as stores from 'store/registry'
 
-// FIXME: HMR in storybook
 const worker = setupWorker(...mockedAPIs)
 worker.start()
 window.worker = worker
@@ -17,6 +17,7 @@ const [RenderTest] = setupTestRenderer()
 export const decorators = [
   (Story) => {
     useEffect(() => {
+      stores.reset()
       return () => {
         worker.resetHandlers()
       }

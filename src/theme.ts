@@ -32,15 +32,16 @@ const theme = {
     drawer: 100
   },
   breakpoints: {
-    xsUp: createBreakpoint(Direction.MIN, 0),
-    smDown: createBreakpoint(Direction.MAX, 600),
-    smUp: createBreakpoint(Direction.MIN, 600),
-    mdDown: createBreakpoint(Direction.MAX, 960),
-    mdUp: createBreakpoint(Direction.MIN, 960),
-    lgDown: createBreakpoint(Direction.MAX, 1280),
-    lgUp: createBreakpoint(Direction.MIN, 1280),
-    xlDown: createBreakpoint(Direction.MAX, 1920),
-    xlUp: createBreakpoint(Direction.MIN, 1920)
+    xsDown: createBreakpoint(Direction.MAX, 365),
+    xsUp: createBreakpoint(Direction.MIN, 365),
+    smDown: createBreakpoint(Direction.MAX, 565),
+    smUp: createBreakpoint(Direction.MIN, 565),
+    mdDown: createBreakpoint(Direction.MAX, 765),
+    mdUp: createBreakpoint(Direction.MIN, 765),
+    lgDown: createBreakpoint(Direction.MAX, 1020),
+    lgUp: createBreakpoint(Direction.MIN, 1020),
+    xlDown: createBreakpoint(Direction.MAX, 1180),
+    xlUp: createBreakpoint(Direction.MIN, 1180)
   }
 }
 

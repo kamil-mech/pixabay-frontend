@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 const LogoWrapper = styled(Link)`
-  width: 145px;
+  width: 108px;
   height: 100%;
+  flex-shrink: 0;
   overflow: hidden;
   display: flex;
   justify-content: center;

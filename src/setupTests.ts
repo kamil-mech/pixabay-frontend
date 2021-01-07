@@ -7,9 +7,12 @@ import '@testing-library/jest-dom'
 import { setupServer } from 'msw/node'
 import { mockedAPIs } from 'test-utils'
 
+import * as stores from 'store/registry'
+
 const server = setupServer(...mockedAPIs)
 beforeAll(() => server.listen())
 beforeEach(() => {
+  stores.reset()
   server.resetHandlers()
 })
 afterAll(() => server.close())

@@ -7,17 +7,15 @@ import UploadIcon from 'icons/Upload'
 import CaretIcon from 'icons/CaretIcon'
 import Text from 'atoms/Text'
 import Button from 'atoms/Button'
+import useMediaQueryStore from 'store/useMediaQueryStore'
+import BurgerIcon from 'icons/BurgerIcon'
+import { maxContainerWidth } from 'atoms/Container'
 
 const HeaderWrapper = styled.header`
   width: 100%;
   height: 60px;
-  display: flex;
   box-shadow: 0 0 60px rgba(0,0,0,.12);
   padding: ${({ theme }) => theme.spacing(2)}px;
-  justify-content: space-between;
-  > * {
-    margin-bottom: 1px;
-  }
 `
 
 const StyledHeaderTabs = styled.div`
@@ -89,13 +87,14 @@ const ExploreDropdown = styled.div`
 `
 const HeaderActions = (): JSX.Element => {
   const { t } = useTranslation()
+  const { smUp, mdUp, lgUp } = useMediaQueryStore()
   return (
     <StyledHeaderActions>
-      <ExploreDropdown>
+      {lgUp && <ExploreDropdown>
         <Text>{t('explore')}</Text>
         <CaretIcon/>
-      </ExploreDropdown>
-      <AccountSection>
+      </ExploreDropdown>}
+      {smUp && <AccountSection>
         <div>
           <Text>{t('log-in')}</Text>
         </div>
@@ -103,10 +102,11 @@ const HeaderActions = (): JSX.Element => {
         <div>
           <Text>{t('join')}</Text>
         </div>
-      </AccountSection>
-      <Button frontAdornment={<UploadIcon/>}>
+      </AccountSection>}
+      {mdUp && <Button frontAdornment={<UploadIcon/>}>
         {t('upload')}
-      </Button>
+      </Button>}
+      {!lgUp && <BurgerIcon />}
     </StyledHeaderActions>
   )
 }
@@ -122,17 +122,32 @@ const Gap = styled.div`
   flex-shrink: 0;
 `
 
+const HeaderContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  max-width: ${maxContainerWidth}px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  > * {
+    margin-bottom: 1px;
+  }
+`
+
 const Header: React.FC = ({ children }): JSX.Element => {
+  const xlUp = useMediaQueryStore(state => state.xlUp)
   return (
     <HeaderWrapper>
-      <StyledHeaderSide>
-        <Logo/>
-        <Gap/>
-        <HeaderTabs />
-      </StyledHeaderSide>
-      <StyledHeaderSide>
-        <HeaderActions/>
-      </StyledHeaderSide>
+      <HeaderContainer>
+        <StyledHeaderSide>
+          <Logo/>
+          {xlUp && <Gap/>}
+          {xlUp && <HeaderTabs />}
+        </StyledHeaderSide>
+        <StyledHeaderSide>
+          <HeaderActions/>
+        </StyledHeaderSide>
+      </HeaderContainer>
     </HeaderWrapper>
   )
 }

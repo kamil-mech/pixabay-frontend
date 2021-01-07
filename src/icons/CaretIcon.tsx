@@ -10,7 +10,8 @@ const CaretIcon = (): JSX.Element => {
     <StyledCaret
       width="16"
       height="8"
-      viewBox="150 380 16 8">
+      viewBox="150 380 16 8"
+      preserveAspectRatio="xMidYMid meet">
       <path
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

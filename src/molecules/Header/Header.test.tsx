@@ -23,11 +23,11 @@ test('renders actions', async () => {
   const [RenderTest] = setupTestRenderer()
   render(<RenderTest><Header/></RenderTest>)
   await waitOneTick()
-  const actionsRegex = /Explore|Log In|Join|Upload/gi
+  const actionsRegex = /Explore|Log in|Join|Upload/gi
   const orderedActions = screen.getAllByText(actionsRegex).map(item => item.textContent)
   expect(orderedActions).toEqual([
     'Explore',
-    'Log In',
+    'Log in',
     'Join',
     'Upload'
   ])

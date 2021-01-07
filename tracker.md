@@ -32,10 +32,11 @@ Project Day 0
     [x] Router
     [x] Storybook
     [x] Style (styled-components) & Theme
-    [ ] Store (zustand)
+    [x] Store (zustand)
+    [ ] Sample request
     [ ] Local storage (localforage)
     [~] Unit tests (jest, react-testing-library, msw)
-    [ ] Document architectural decisions
+    [~] Document architectural decisions
 [ ] PXB-2 Landing page * https://kmech.atlassian.net/browse/PXB-2
     [ ] Fetch images from Pixabay API
         * Pixabay API documentation: https://pixabay.com/api/docs/
@@ -50,9 +51,14 @@ Project Day 0
     * https://github.com/storybookjs/presets/issues/177
     [x] Try SB5 and/or CRA3
         * Still doesn't work
+[ ] Flag bugs found in production
+    [ ] Flag to PXB that the burger menu icon and the search icon are cropped at the edges
+    [ ] Notify PBX that their sprite map (sprites.svg?2) is pulled like 100 times on https://pixabay.com/images/search/?order=ec
 
-# Appendix (things I learned and reading TODOs)
+# Appendix (observations, things I learned and reading TODOs)
 - Be careful of accidentally nesting routers, causes hard to find bugs
 - There must be a bug in react-testing-library, as using a regex on sibling items (e.g /Photos|Illustrations|Vectors|Videos|Music/gi) skips every 2nd item. This can be mitigated by increasing DOM nesting or introducing an interim DOM element as a separator between them
 - Storybook's HMR is currently badly broken, it caused my machine to freeze way too many times
-- https://pixabay.com/ has plenty of custom paddings, margins, font-sizes and colors. I found myself abusing the theme with `calc` quite a few times to achieve the same looks. Would prefer to stick to the theme and remove those hacks
+- https://pixabay.com/ has plenty of custom paddings, margins, font-sizes and colors. I found myself abusing the theme with `calc` quite a few times to achieve the same looks. Would prefer to stick to the theme and remove those hacks (might involve convincing the design team to buy into some constraints). Also had to change the most common industry breakpoints to pixabay custom ones
+- Software open-sourced by PXB: https://goodies.pixabay.com/
+- There's a bunch of polish translations missing - I can provide them if needed
