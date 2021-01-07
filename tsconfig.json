@@ -24,7 +24,6 @@
     "downlevelIteration": true
   },
   "include": [
-    "src",
-    ".storybook"
+    "src"
   ]
 }

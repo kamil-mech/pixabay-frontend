@@ -15,7 +15,8 @@ Project Day 0
 * Pre-PR checks:
 * - Feature branch and clean conventional commits
 * - Refers to JIRA ticket
-* - Responsive
+* - Cross-platform (Responsive)
+* - Cross-browser
 * - Localized
 * - Storybooked
 * - Unit-tested
@@ -30,7 +31,7 @@ Project Day 0
     [x] Localization (i18next)
     [x] Router
     [x] Storybook
-    [ ] Style (styled-components) & Theme
+    [x] Style (styled-components) & Theme
     [ ] Store (zustand)
     [ ] Local storage (localforage)
     [~] Unit tests (jest, react-testing-library, msw)
@@ -44,7 +45,14 @@ Project Day 0
 [ ] PXB-3 Image page * https://kmech.atlassian.net/browse/PXB-3
     [ ] Display target image (bigger version - perhaps hero)
     [ ] Display details (photographer, tags, views, downloads, size)
+[-] Fix HMR in storybook conflicting with MSW
+    * Looks like this has nothing to do with MSW:
+    * https://github.com/storybookjs/presets/issues/177
+    [x] Try SB5 and/or CRA3
+        * Still doesn't work
 
 # Appendix (things I learned and reading TODOs)
 - Be careful of accidentally nesting routers, causes hard to find bugs
 - There must be a bug in react-testing-library, as using a regex on sibling items (e.g /Photos|Illustrations|Vectors|Videos|Music/gi) skips every 2nd item. This can be mitigated by increasing DOM nesting or introducing an interim DOM element as a separator between them
+- Storybook's HMR is currently badly broken, it caused my machine to freeze way too many times
+- https://pixabay.com/ has plenty of custom paddings, margins, font-sizes and colors. I found myself abusing the theme with `calc` quite a few times to achieve the same looks. Would prefer to stick to the theme and remove those hacks

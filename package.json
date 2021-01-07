@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "lint": "eslint --ext ts,tsx src .storybook --fix",
+    "lint": "eslint --ext ts,tsx src --fix",
     "test": "react-scripts test",
     "browserslist": "browserslist",
     "storybook": "start-storybook -p 6006 -s public",
@@ -45,6 +45,10 @@
             },
             {
               "pattern": "HOCs/**",
+              "group": "unknown"
+            },
+            {
+              "pattern": "icons/**",
               "group": "unknown"
             },
             {
@@ -97,6 +101,9 @@
         }
       ],
       "@typescript-eslint/strict-boolean-expressions": "off"
+    },
+    "globals": {
+      "Theme": "readonly"
     }
   },
   "browserslist": [
@@ -113,7 +120,8 @@
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1"
+    "react-scripts": "4.0.1",
+    "styled-components": "^5.2.1"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^6.1.11",
@@ -131,6 +139,7 @@
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
     "@types/react-router-dom": "^5.1.6",
+    "@types/styled-components": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.11.0",
     "@typescript-eslint/parser": "^4.11.0",
     "babel-plugin-typescript-to-proptypes": "^1.4.2",

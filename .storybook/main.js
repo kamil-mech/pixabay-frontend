@@ -18,6 +18,11 @@ module.exports = {
     )
 
     webpackConfig.resolve.plugins.splice(scopePluginIndex, 1)
+
+    // https://github.com/storybookjs/presets/issues/177
+    // https://github.com/storybookjs/storybook/issues/3062#issuecomment-504550789
+    // Feedback loop is atrocious due to super-slow builds - thus disabling Storybook's HMR
+    webpackConfig.entry = webpackConfig.entry.filter(singleEntry => !singleEntry.includes('/webpack-hot-middleware/'))
     return webpackConfig
   }
 }
