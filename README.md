@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Usage
 
+### `npm run proxy`
+
+Sets up a local proxy backend. Running this is required.
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -42,6 +46,7 @@ Some files of interest:
 - .storybook/preview
 - src/setupTests
 - src/testUtils
+- src/contract
 - store/registry
 
 ### Responsive testing
@@ -58,4 +63,8 @@ At the moment I believe that no amount of programmatic testing can compete with 
 
 ## Store
 
-This project uses [https://www.npmjs.com/package/zustand](Zustand). It's much simpler and much more minimalistic than Redux and even Recoil. It's hooks based and allows us to split the code into self-contained microstores. It doesn't require any middleware to use and can even operate outside of the hooks realm. And we still get to keep all the advantages of a fully-fledged store system
+This project uses [zustand](https://www.npmjs.com/package/zustand). It's much simpler and much more minimalistic than Redux and even Recoil. It's hooks based and allows us to split the code into self-contained microstores. It doesn't require any middleware to use and can even operate outside of the hooks realm. And we still get to keep all the advantages of a fully-fledged store system
+
+## Forms
+
+This project doesn't require forms, but if it did, it would use [react-hook-form](https://www.npmjs.com/package/react-hook-form) with [ajv](https://www.npmjs.com/package/ajv)

@@ -5,14 +5,17 @@
 import '@testing-library/jest-dom'
 
 import { setupServer } from 'msw/node'
-import { mockedAPIs } from 'test-utils'
+import { mockedAPIs, faultyEndpoints } from 'test-utils'
 
 import * as stores from 'store/registry'
 
+// @ts-expect-error
+window.originalFetch = window.fetch
 const server = setupServer(...mockedAPIs)
 beforeAll(() => server.listen())
 beforeEach(() => {
   stores.reset()
   server.resetHandlers()
+  faultyEndpoints.off()
 })
 afterAll(() => server.close())

@@ -9,5 +9,6 @@ test('renders home content', async () => {
   render(<RenderTest><Home/></RenderTest>)
   await waitOneTick()
   expect(history.location.pathname).toEqual('/')
-  expect(screen.getByText(/Hello world/i)).toBeInTheDocument()
+  expect(screen.getByText(/See Sample Image/i)).toBeInTheDocument()
+  expect(document.title).toBe('1.9 million+ Stunning Free Images to Use Anywhere - Pixabay')
 })

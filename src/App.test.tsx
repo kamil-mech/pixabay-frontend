@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { setupTestRenderer, waitOneTick } from 'test-utils'
+import getSingle from 'contract/samples/get-single'
 
 import { AppContent } from './App'
 
@@ -9,16 +10,18 @@ test('renders home page', async () => {
   render(<RenderTest><AppContent/></RenderTest>)
   await waitOneTick()
   expect(history.location.pathname).toEqual('/')
-  expect(screen.getByText(/Hello world/i)).toBeInTheDocument()
+  expect(screen.getByText(/See Sample Image/i)).toBeInTheDocument()
 })
 
 test('renders image details page', async () => {
-  const url = '/photos/buddha-statue-monument-buddhism-5868759'
-  const [RenderTest, history] = setupTestRenderer({ url })
-  render(<RenderTest><AppContent/></RenderTest>)
+  const [RenderTest, history] = setupTestRenderer({
+    url: getSingle.success.webUrl,
+    route: getSingle.webRoute
+  })
+  render(<RenderTest><AppContent/> </RenderTest>)
+  expect(history.location.pathname).toEqual(getSingle.success.webUrl)
   await waitOneTick()
-  expect(history.location.pathname).toEqual(url)
-  expect(screen.getByText(/Image Description/i)).toBeInTheDocument()
+  expect(screen.getByText(/Buddha Statue Monument/i)).toBeInTheDocument()
 })
 
 test('renders not found page', async () => {

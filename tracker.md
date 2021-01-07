@@ -23,7 +23,7 @@ Project Day 0
 * - Uses theme
 * - JIRA updated after merge
 [x] Setup jira
-[~] PXB-1 Setup the repo * https://kmech.atlassian.net/browse/PXB-1
+[x] PXB-1 Setup the repo * https://kmech.atlassian.net/browse/PXB-1
     [x] React (create-react-app)
     [x] Typescript & linting
     [x] Atomic design
@@ -33,10 +33,15 @@ Project Day 0
     [x] Storybook
     [x] Style (styled-components) & Theme
     [x] Store (zustand)
-    [ ] Sample request
-    [ ] Local storage (localforage)
-    [~] Unit tests (jest, react-testing-library, msw)
-    [~] Document architectural decisions
+    [x] Sample request
+    [-] Local storage (localforage)
+        * There isn't really any need for this right now
+        * It would be easy to integrate with zustand anyway
+    [x] Unit tests (jest, react-testing-library, msw)
+    [x] Document architectural decisions
+    [x] Investigate MSW infinite loop inside Storybook when fetching <img src="/favicon.png" />
+        * Library is broken in a circular way, used a bypass header to bail out
+        * This was definitely in top hardest things I had to debug
 [ ] PXB-2 Landing page * https://kmech.atlassian.net/browse/PXB-2
     [ ] Fetch images from Pixabay API
         * Pixabay API documentation: https://pixabay.com/api/docs/
@@ -51,6 +56,8 @@ Project Day 0
     * https://github.com/storybookjs/presets/issues/177
     [x] Try SB5 and/or CRA3
         * Still doesn't work
+[ ] Draw architectural diagram
+[ ] Consider using non-english strings in the tests to better enforce usage of i18n
 [ ] Flag bugs found in production
     [ ] Flag to PXB that the burger menu icon and the search icon are cropped at the edges
     [ ] Notify PBX that their sprite map (sprites.svg?2) is pulled like 100 times on https://pixabay.com/images/search/?order=ec
