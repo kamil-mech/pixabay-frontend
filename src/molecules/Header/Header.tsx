@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 
 import Logo from 'icons/Logo'
-import UploadIcon from 'icons/Upload'
+import UploadIcon from 'icons/UploadIcon'
 import CaretIcon from 'icons/CaretIcon'
 import Text from 'atoms/Text'
 import Button from 'atoms/Button'

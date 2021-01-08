@@ -9,5 +9,6 @@ test('renders not found content', async () => {
   render(<RenderTest><NotFound/></RenderTest>)
   await waitOneTick()
   expect(history.location.pathname).toEqual('/nowhere')
+  expect(document.title).toBe('Error 404')
   expect(screen.getByText(/Sorry, the page you are looking for is missing/i)).toBeInTheDocument()
 })

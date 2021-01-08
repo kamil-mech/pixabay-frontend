@@ -5,8 +5,14 @@ import styled from 'styled-components'
 
 import Logo from './Logo'
 import CaretIcon from './CaretIcon'
-import UploadIcon from './Upload'
+import UploadIcon from './UploadIcon'
 import BurgerIcon from './BurgerIcon'
+import ShareIcon from './ShareIcon'
+import LikeIcon from './LikeIcon'
+import StarIcon from './StarIcon'
+import DownloadIcon from './DownloadIcon'
+import EditorsChoiceIcon from './EditorsChoiceIcon'
+import ReportIcon from './ReportIcon'
 
 const meta: Meta = {
   title: 'atoms/Icons'
@@ -31,8 +37,14 @@ export const Default = (): JSX.Element => (
     <Track>
       <Logo />
       <UploadIcon />
+      <DownloadIcon />
       <CaretIcon />
       <BurgerIcon />
+      <ShareIcon />
+      <LikeIcon />
+      <StarIcon />
+      <EditorsChoiceIcon />
+      <ReportIcon />
     </Track>
   </Background>
 )

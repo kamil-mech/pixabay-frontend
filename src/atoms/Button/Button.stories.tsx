@@ -3,7 +3,7 @@ import React from 'react'
 import { Meta } from '@storybook/react/types-6-0'
 import styled from 'styled-components'
 
-import UploadIcon from 'icons/Upload'
+import UploadIcon from 'icons/UploadIcon'
 
 import Button from './Button'
 

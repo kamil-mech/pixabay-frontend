@@ -5,23 +5,37 @@ import Text from 'atoms/Text'
 
 type StyledButtonProps = {
   backgroundColor: string
+  small?: boolean
+  large?: boolean
+  outlined?: boolean
 } & ThemeProps<Theme>
 
 const StyledButton = styled.button<StyledButtonProps>`
-  height: 35px;
+  cursor: pointer;
+  height: ${({ large, small }) => large ? 42 : small ? 30 : 35}px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: ${({ theme }) => theme.spacing(1)}px calc(${({ theme }) => theme.spacing(3)}px + 3px);
+  padding: ${({ theme }) => theme.spacing(1)}px calc(${({ theme, small }) => theme.spacing(small ? 1 : 3)}px + 3px);
   border-radius: 50px;
-  border: 0;
+  ${({ theme, outlined }) => outlined ? `border: 1px solid ${theme.palette.tertiary}` : 'border: 0'};
   background-color: ${({ backgroundColor }) => backgroundColor};
   &:focus {
     outline: none;
     box-shadow: none;
   }
   &:hover {
-    background-image: linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));
+    ${({ theme, outlined }) => {
+      if (outlined) {
+        return `
+          border-color: ${theme.palette.info};
+        `
+      }
+      return 'background-image: linear-gradient(transparent,rgba(0,0,0,.05) 40%,rgba(0,0,0,.1));'
+    }}
+  }
+  &:hover > * {
+    ${({ theme, outlined }) => outlined ? `color: ${theme.palette.info}` : ''};
   }
   &:active {
     box-shadow: inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 6px rgba(0,0,0,.2);
@@ -29,17 +43,20 @@ const StyledButton = styled.button<StyledButtonProps>`
   > * + * {
     margin-left: ${({ theme }) => theme.spacing(1)}px;
   }
-  svg {
-    margin-bottom: 1px;
-  }
 `
 
 interface ButtonProps {
-  // Size and color variant: primary (default: primary)
+  // Color variant: secondary (default: primary)
   secondary?: boolean
-  // Size and color variant: primary (default: primary)
+  // Color variant: tertiary (default: primary)
   tertiary?: boolean
-  color?: string
+  // Color variant: outlined (default: primary)
+  outlined?: boolean
+  // Size variant: small (default: medium)
+  small?: boolean
+  // Size variant: large (default: medium)
+  large?: boolean
+  bold?: boolean
   // Can be used to place icons before text
   frontAdornment?: JSX.Element
   // Can be used to place icons after text
@@ -50,15 +67,33 @@ const Button = ({
   children,
   secondary,
   tertiary,
+  outlined,
+  small,
+  large,
+  bold,
   frontAdornment,
   backAdornment
 }: ButtonProps): JSX.Element => {
   const palette = useTheme().palette
+  const bgColor = secondary
+    ? palette.secondary : tertiary
+      ? palette.tertiary : outlined
+        ? palette.light : palette.primary
+  const textColor = outlined
+    ? palette.darkEmphasis : tertiary
+      ? palette.dark : palette.light
   return <StyledButton
-    backgroundColor={secondary ? palette.secondary : tertiary ? palette.tertiary : palette.primary }
+    backgroundColor={bgColor}
+    large={large}
+    small={small}
+    outlined={outlined}
   >
     {frontAdornment}
-    <Text color={tertiary ? palette.dark : palette.light }>
+    <Text
+      color={textColor}
+      h5={large}
+      sub2={small && !bold}
+      bold={bold}>
       {children}
     </Text>
     {backAdornment}

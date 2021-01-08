@@ -40,7 +40,7 @@ Especially:
 - https://kentcdodds.com/blog/testing-implementation-details/
 - https://kentcdodds.com/blog/stop-mocking-fetch
 
-On top of that, it follows design-by-contract when it comes to interactions with the APIs. This means that ideally the both the frontend and the backend should use the same sample fixtures and validation (e.g. JSON schema), by reference. This would ensure that at no point ever the contract between the provider and the consumer would be broken. Due to limitations (no access to BE repo), I have included those fixtures in the frontend (the consumer)
+On top of that, it follows design-by-contract when it comes to interactions with the APIs. This means that ideally both the frontend and the backend should use the same sample fixtures and validation (e.g. JSON schema), by reference. This would ensure that at no point ever the contract between the provider and the consumer would be broken. Due to limitations (no access to BE repo), I have included those fixtures in the frontend (the consumer)
 
 Some files of interest:
 - .storybook/preview
@@ -57,7 +57,7 @@ Some files of interest:
 
 Every project I was on, snapshot testing was eventually removed. It's a shortcut that feels productive, but eventually backfires in a nasty way (or becomes completely abandoned). It has a very high noise-to-signal ratio
 
-### Testing style
+### Testing styling & css
 
 At the moment I believe that no amount of programmatic testing can compete with the human eye. Storybook can greatly aid this manual process. In theory we could snapshot-test the pixels, but that would likely end up being noise too
 
