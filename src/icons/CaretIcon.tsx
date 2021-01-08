@@ -1,11 +1,12 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 const StyledCaret = styled.svg`
   margin-top: 2px;
 `
 
 const CaretIcon = (): JSX.Element => {
+  const palette = useTheme().palette
   return (
     <StyledCaret
       width="16"
@@ -16,7 +17,7 @@ const CaretIcon = (): JSX.Element => {
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         fillRule="nonzero"
-        stroke="#878A9E"
+        stroke={palette.darkEmphasis}
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.79"

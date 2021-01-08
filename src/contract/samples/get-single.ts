@@ -1,7 +1,8 @@
+import traverse from 'traverse'
 const key = '6473511-0417f2cad683f1bee54cafe15'
 
 const fixture = {
-  webRoute: '/photos/:photoSlug',
+  webRoute: '/:category/:photoSlug',
   success: {
     webUrl: '/photos/buddha-statue-monument-buddhism-5868759/',
     request: {
@@ -45,5 +46,14 @@ const fixture = {
     response: new Error('Request failed with status code 400')
   }
 }
+
+// Links expire so we have to replace them with something
+// permanent to be able to render storybook properly
+const loremPicsumLink = 'https://i.picsum.photos/id/1016/477/720.jpg?hmac=G24ybRFC0PXHAHwtb0PfDOikIX204AGDTjr4jJCvMq4'
+traverse(fixture).forEach(function (x: any) {
+  if (typeof x === 'string' && x.match(/http.+?\.jpg/)) {
+    this.update(loremPicsumLink)
+  }
+})
 
 export default fixture

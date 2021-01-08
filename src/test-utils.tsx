@@ -3,7 +3,7 @@ import React from 'react'
 import { History, createMemoryHistory } from 'history'
 import { Redirect, Route } from 'react-router-dom'
 import { AppWrapper } from 'App'
-import { waitFor } from '@testing-library/dom'
+import { Screen, waitFor } from '@testing-library/dom'
 import { rest } from 'msw'
 import getSingle from 'contract/samples/get-single'
 
@@ -42,6 +42,15 @@ export const waitOneTick = async (): Promise<void> => {
   })
 }
 
+interface ExpectOrderOptions {
+  caseSensitive: boolean
+}
+// FIXME: handle tricky &nbsp cases
+export const expectOrder = (screen: Screen, arr: string[], options?: ExpectOrderOptions | undefined): void => {
+  const regex = new RegExp(arr.join('|'), options?.caseSensitive ? '' : 'i')
+  expect(screen.getAllByText(regex).map(item => item.textContent)).toEqual(arr)
+}
+
 // https://kentcdodds.com/blog/stop-mocking-fetch
 let simulateFaultyAPI = false
 export const faultyEndpoints = {
@@ -72,20 +81,22 @@ export const mockedAPIs = [
       }
     }
     throw new Error('unexpected case')
-  }),
-  // Used by Storybook
-  rest.get('*', async (req, res, ctx) => {
-    // We are using a bailout header to avoid an infinite loop
-    // This is likely an issue with the library
-    // window.originalFetch is defined in
-    // .storybook/preview and src/setupTests
-    // @ts-expect-error
-    const fRes = await window.originalFetch(req.url, {
-      headers: new Headers([
-        ['x-msw-bypass', 'true']
-      ])
-    })
-    const buffer = await fRes.arrayBuffer()
-    return await res(ctx.body(buffer))
   })
+  // This seems to not be needed anymore
+  // Perhaps it stopped being relevant when we downgraded to msw 0.24
+  // Will keep it here for now and remove as needed
+  // rest.get('*', async (req, res, ctx) => {
+  //   // We are using a bailout header to avoid an infinite loop
+  //   // This is likely an issue with the library
+  //   // window.originalFetch is defined in
+  //   // .storybook/preview and src/setupTests
+  //   // @ts-expect-error
+  //   const fRes = await window.originalFetch(req.url, {
+  //     headers: new Headers([
+  //       ['x-msw-bypass', 'true']
+  //     ])
+  //   })
+  //   const buffer = await fRes.arrayBuffer()
+  //   return await res(ctx.body(buffer))
+  // })
 ]

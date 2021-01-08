@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { setupTestRenderer, waitOneTick } from 'test-utils'
+import { setupTestRenderer, expectOrder, waitOneTick } from 'test-utils'
 
 import Header from './Header'
 
@@ -8,9 +8,7 @@ test('renders tabs', async () => {
   const [RenderTest] = setupTestRenderer()
   render(<RenderTest><Header/></RenderTest>)
   await waitOneTick()
-  const tabRegex = /Photos|Illustrations|Vectors|Videos|Music/gi
-  const orderedTabs = screen.getAllByText(tabRegex).map(item => item.textContent)
-  expect(orderedTabs).toEqual([
+  expectOrder(screen, [
     'Photos',
     'Illustrations',
     'Vectors',
@@ -23,9 +21,7 @@ test('renders actions', async () => {
   const [RenderTest] = setupTestRenderer()
   render(<RenderTest><Header/></RenderTest>)
   await waitOneTick()
-  const actionsRegex = /Explore|Log in|Join|Upload/gi
-  const orderedActions = screen.getAllByText(actionsRegex).map(item => item.textContent)
-  expect(orderedActions).toEqual([
+  expectOrder(screen, [
     'Explore',
     'Log in',
     'Join',

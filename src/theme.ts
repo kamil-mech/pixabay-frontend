@@ -21,7 +21,9 @@ const theme = {
     warning: 'yellow',
     error: 'red',
     emphasis: 'red',
-    deemphasis: '#a5a8ab'
+    lightEmphasis: '#f6f5fa',
+    deemphasis: '#a5a8ab',
+    darkEmphasis: '#636363'
   },
   zIndex: {
     tooltip: 250,
@@ -29,7 +31,8 @@ const theme = {
     modal: 150,
     dialog: 150,
     backdrop: 125,
-    drawer: 100
+    drawer: 100,
+    imageOverlay: 1
   },
   breakpoints: {
     xsDown: createBreakpoint(Direction.MAX, 365),
