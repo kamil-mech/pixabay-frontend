@@ -1,12 +1,11 @@
-import traverse from 'traverse'
-const key = '6473511-0417f2cad683f1bee54cafe15'
+import { randomImage } from './utils'
 
 const fixture = {
   webRoute: '/:category/:photoSlug',
   success: {
     webUrl: '/photos/buddha-statue-monument-buddhism-5868759/',
     request: {
-      url: `/api?id=5868759&key=${key}`
+      url: '/api?id=5868759&key=6473511-0417f2cad683f1bee54cafe15'
     },
     faultyResponse: new Error('Request failed with status code 404'),
     response: [{
@@ -40,7 +39,7 @@ const fixture = {
   error: {
     webUrl: '/photos/nowhere-999999999999999999999999999999999999/',
     request: {
-      url: `/api?id=999999999999999999999999999999999999&key=${key}`
+      url: '/api?id=999999999999999999999999999999999999&key=6473511-0417f2cad683f1bee54cafe15'
     },
     faultyResponse: new Error('Request failed with status code 400'),
     response: new Error('Request failed with status code 400')
@@ -49,11 +48,11 @@ const fixture = {
 
 // Links expire so we have to replace them with something
 // permanent to be able to render storybook properly
-const loremPicsumLink = 'https://i.picsum.photos/id/1016/477/720.jpg?hmac=G24ybRFC0PXHAHwtb0PfDOikIX204AGDTjr4jJCvMq4'
-traverse(fixture).forEach(function (x: any) {
-  if (typeof x === 'string' && x.match(/http.+?\.jpg/)) {
-    this.update(loremPicsumLink)
+// @ts-expect-error
+if (window.storybook) {
+  for (const response of fixture.success.response) {
+    Object.assign(response, randomImage())
   }
-})
+}
 
 export default fixture

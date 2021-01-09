@@ -15,9 +15,9 @@ interface ImageMetaTableProps {
   imageDetails: ImageDetails
 }
 const ImageMetaTable = ({ imageDetails }: ImageMetaTableProps): JSX.Element => {
-  const { webformatURL, imageWidth, imageHeight, views, downloads } = imageDetails
+  const { imageURL, imageWidth, imageHeight, views, downloads } = imageDetails
   const palette = useTheme().palette
-  const type = webformatURL.split('.').reverse()[0].split('?')[0].toUpperCase()
+  const type = imageURL.split('.').reverse()[0].split('?')[0].toUpperCase()
   const { t } = useTranslation()
   return (
     <Text color={palette.darkEmphasis}>

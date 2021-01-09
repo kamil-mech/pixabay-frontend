@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
 import throttle from 'lodash.throttle'
+import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
+import { ImageDetails } from 'store/useImageDetailStore'
+import { getImageName, getImageSrcSet } from 'utils'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,13 +16,17 @@ const Wrapper = styled.div`
   }
 `
 
-const gridSpacing = 16
+export const gridSpacing = 16
 const GridRow = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   > * + * {
     margin-left: ${gridSpacing}px;
+  }
+  > * {
+    flex-shrink: 1;
+    flex-grow: 0;
   }
 `
 
@@ -26,18 +35,11 @@ const GridItem = styled.img`
   height: auto;
 `
 
-interface GridImage {
-  id: string
-  width: number
-  height: number
-  src: string
-}
-
 interface UpscaleRef {
   current: number
 }
 interface ResizedImage {
-  image: GridImage
+  image: ImageDetails
   // image width after initial scaling against thresholdHeight
   scaledImageWidth: number
   // Additional multiplier to be used to ensure images fill 100% row width
@@ -58,9 +60,11 @@ interface Rows {
 // 10.188232421875 ms
 // 6.321044921875 ms
 // 8.89697265625 ms
-const computeSpace = (maxWidth: number, images: GridImage[], thresholdHeight: number): Rows => {
+export const computeSpace = (maxWidth: number, images: ImageDetails[], thresholdHeight: number, maxRows?: number): Rows => {
   // Used to track total width assigned in given row
   // Important to keep it below maxWidth at all times
+  // Note this does not account for padding,
+  // because later we use this var for upscaling
   let totalWidth = 0
   // All images are shipped with a ref to post-calculatory multiplier
   // It is impossible to know its value in middle of traversal
@@ -74,18 +78,22 @@ const computeSpace = (maxWidth: number, images: GridImage[], thresholdHeight: nu
     const image = images[i]
     // Answers the question: how many px of width do I get per 1px of height in this image
     // Think normalization, we are dropping magnitude but keep the aspect ratio itself
-    const heightToWidthVector = image.width / image.height
+    const heightToWidthVector = image.imageWidth / image.imageHeight
     // e.g. an image with aspect ratio 1.5 (300x200) would require 240 width to reach 160 height
     const scaledImageWidth = heightToWidthVector * thresholdHeight
+    const spaceBetweens = rows[rows.length - 1].length - 1
+    const totalPadding = gridSpacing * spaceBetweens
     if (totalWidth + gridSpacing + scaledImageWidth > maxWidth) {
       // If this image would cause overflow, "flush" current row
       // by assigning final multiplier - to be used for stretching to 100% container width
-      const spaceBetweens = rows[rows.length - 1].length - 1
-      const upscale = (maxWidth - (gridSpacing * spaceBetweens)) / totalWidth
+      const upscale = (maxWidth - totalPadding) / totalWidth
       upscaleRef.current = upscale
       upscaleRef = { current: 1 }
 
       // And then start a new one
+      if (maxRows && maxRows === rows.length) {
+        return { rows }
+      }
       totalWidth = 0
       rows.push([])
     }
@@ -98,11 +106,14 @@ const computeSpace = (maxWidth: number, images: GridImage[], thresholdHeight: nu
 
 interface HorizontalImageGridProps {
   startingWidth?: number
-  images: GridImage[]
+  images: ImageDetails[]
   thresholdHeight: number
+  maxRows?: number
 }
 
-const HorizontalImageGrid = ({ startingWidth, images, thresholdHeight }: HorizontalImageGridProps): JSX.Element => {
+const HorizontalImageGrid = (props: HorizontalImageGridProps): JSX.Element => {
+  const { t } = useTranslation()
+  const { startingWidth, images, thresholdHeight, maxRows } = props
   // Keep track of container width
   const ref = useRef<HTMLElement | null>(null)
   const [width, setWidth] = useState(startingWidth ?? 0)
@@ -114,30 +125,31 @@ const HorizontalImageGrid = ({ startingWidth, images, thresholdHeight }: Horizon
   // Recalculature on resize - there's probably some room for optimization here
   useEffect(() => {
     const listener = throttle((): void => {
-      setWidth(ref?.current?.getBoundingClientRect().width ?? 1080)
+      setWidth(ref?.current?.getBoundingClientRect().width ?? startingWidth ?? 300)
     }, 1000 / 120)
     window.addEventListener('resize', listener)
     return () => window.removeEventListener('resize', listener)
   })
 
-  const { rows } = useMemo(() => computeSpace(width, images, thresholdHeight), [width, images, thresholdHeight])
+  const { rows } = useMemo(() => {
+    return computeSpace(width, images, thresholdHeight, maxRows)
+  }, [width, images, thresholdHeight, maxRows])
+
   return (
     <Wrapper ref={refCb}>
-      {
-        rows.map((row, i) => {
-          return (
-            <GridRow key={i}>
-              {row.map(({ image, scaledImageWidth, upscaleRef }) => (
-                <div key={image.id} style={{ width: scaledImageWidth * upscaleRef.current }}>
-                  {
-                    <GridItem src={image.src} />
-                  }
-                </div>
-              ))}
-            </GridRow>
-          )
-        })
-      }
+      {rows.map((row, i) => {
+        return (
+          <GridRow key={i}>
+            {row.map(({ image: imageDetails, scaledImageWidth, upscaleRef }) => (
+              <div key={imageDetails.id} style={{ flexBasis: scaledImageWidth * upscaleRef.current }}>
+                <Link to={imageDetails.pageURL.replace('https://pixabay.com', '')}>
+                  <GridItem src={imageDetails.webformatURL} srcSet={getImageSrcSet(imageDetails)} alt={getImageName(imageDetails, t)} />
+                </Link>
+              </div>
+            ))}
+          </GridRow>
+        )
+      })}
     </Wrapper>
   )
 }

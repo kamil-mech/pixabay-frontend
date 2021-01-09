@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
-import { setupTestRenderer, expectOrder, faultyEndpoints } from 'test-utils'
+import { setupTestRenderer, expectOrder, faultyEndpoints, waitOneTick } from 'test-utils'
 import getSingle from 'contract/samples/get-single'
 import userEvent from '@testing-library/user-event'
 
@@ -38,6 +38,7 @@ test('renders image details content', async () => {
     ], { caseSensitive: true })
 
     // Sidebar
+    const { imageWidth, imageHeight } = getSingle.success.response[0]
     expectOrder(screen, [
       'travelphotographer',
       'Coffee', 'Follow',
@@ -50,7 +51,7 @@ test('renders image details content', async () => {
       'Like Pixabay on Facebook',
       'Related Images',
       'Image Type', 'JPG',
-      'Resolution', '3264x4928',
+      'Resolution', `${imageWidth}x${imageHeight}`,
       'Views', '4423',
       'Downloads', '2641'
     ])
@@ -115,6 +116,7 @@ test('handles retry', async () => {
     ], { caseSensitive: true })
 
     // Sidebar
+    const { imageWidth, imageHeight } = getSingle.success.response[0]
     expectOrder(screen, [
       'travelphotographer',
       'Coffee', 'Follow',
@@ -127,10 +129,28 @@ test('handles retry', async () => {
       'Like Pixabay on Facebook',
       'Related Images',
       'Image Type', 'JPG',
-      'Resolution', '3264x4928',
+      'Resolution', `${imageWidth}x${imageHeight}`,
       'Views', '4423',
       'Downloads', '2641'
     ])
   })
   expect(document.title).toBe('Buddha Statue Monument')
+})
+
+test('filters out self from related and sponsored images', async () => {
+  const [RenderTest] = setupTestRenderer({
+    url: getSingle.success.webUrl,
+    route: getSingle.webRoute
+  })
+  render(<RenderTest><ImageDetails/> </RenderTest>)
+  await waitOneTick()
+  // @ts-expect-error
+  window.eyjafjallajokull = 'YOLO'
+  await waitFor(() => {
+    expect(screen.queryByText(/Loading\.\.\./i)).toBeNull()
+  })
+  // @ts-expect-error
+  window.eyjafjallajokull = undefined
+  const all = screen.getAllByAltText('Buddha Statue Monument')
+  expect(all.length).toEqual(1)
 })

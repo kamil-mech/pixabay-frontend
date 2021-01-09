@@ -32,6 +32,15 @@ const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
   }
+
+  @font-face {
+    font-family: "Open Sans";
+    src: url("mem8YaGs126MiZpBA-UFVZ0b.woff2");
+  }
+  @font-face {
+    font-family: "Open Sans Bold";
+    src: url("mem5YaGs126MiZpBA-UN7rgOUuhp.woff2");
+  }
 `
 
 // Wrapper is shared with unit tests and storybook

@@ -6,6 +6,8 @@ import { AppWrapper } from 'App'
 import { Screen, waitFor } from '@testing-library/dom'
 import { rest } from 'msw'
 import getSingle from 'contract/samples/get-single'
+import getRelated from 'contract/samples/get-related'
+import getRelatedSponsored from 'contract/samples/get-related-sponsored'
 
 import enTranslation from '../public/locales/en/translation.json'
 
@@ -32,6 +34,7 @@ export const setupTestRenderer = (props?: TestRendererProps): RenderOutput => {
 }
 
 // Used to catch side effects like initializing async store
+// or loading translations
 export const waitOneTick = async (): Promise<void> => {
   let ready = false
   setTimeout(() => {
@@ -69,7 +72,11 @@ export const mockedAPIs = [
   rest.get('/api', async (req, res, ctx) => {
     const endPoints = [
       getSingle.success,
-      getSingle.error
+      getSingle.error,
+      getRelated.success,
+      getRelated.error,
+      getRelatedSponsored.success,
+      getRelatedSponsored.error
     ]
     for (const endpoint of endPoints) {
       if (req.url.toString().includes(endpoint.request.url)) {
@@ -80,23 +87,6 @@ export const mockedAPIs = [
         return await res(ctx.json(endpoint.response))
       }
     }
-    throw new Error('unexpected case')
+    throw new Error('unexpected case: ' + req.url.toString())
   })
-  // This seems to not be needed anymore
-  // Perhaps it stopped being relevant when we downgraded to msw 0.24
-  // Will keep it here for now and remove as needed
-  // rest.get('*', async (req, res, ctx) => {
-  //   // We are using a bailout header to avoid an infinite loop
-  //   // This is likely an issue with the library
-  //   // window.originalFetch is defined in
-  //   // .storybook/preview and src/setupTests
-  //   // @ts-expect-error
-  //   const fRes = await window.originalFetch(req.url, {
-  //     headers: new Headers([
-  //       ['x-msw-bypass', 'true']
-  //     ])
-  //   })
-  //   const buffer = await fRes.arrayBuffer()
-  //   return await res(ctx.body(buffer))
-  // })
 ]
