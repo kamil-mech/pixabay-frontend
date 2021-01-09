@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
-import { setupTestRenderer, expectOrder, faultyEndpoints, waitOneTick } from 'test-utils'
+import { setupTestRenderer, expectOrder, faultyEndpoints } from 'test-utils'
 import getSingle from 'contract/samples/get-single'
 import userEvent from '@testing-library/user-event'
 

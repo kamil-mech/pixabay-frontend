@@ -3,8 +3,6 @@ import create, { State } from 'zustand'
 import axios from 'axios'
 import queryString from 'query-string'
 
-import { registry } from 'store/registry'
-
 import { ImageDetails } from './useImageDetailStore'
 
 interface RelatedImagesState extends State {
@@ -19,11 +17,13 @@ interface RelatedImageQuery {
   tags: string[]
   sponsored?: boolean
 }
-type ImageDetailResponse = RelatedImagesState & {
+type RelatedImagesResponse = RelatedImagesState & {
   refetch: () => void
 }
-const useImageDetailStore = (query: RelatedImageQuery): ImageDetailResponse => {
+const useRelatedImagesStore = (query: RelatedImageQuery): RelatedImagesResponse => {
   const useStore = useMemo(() => {
+    // This store is embedded inside the hook because we want to use it as a
+    // private fetching mechanism for given component rather than shared state
     const useStore = create<RelatedImagesState>(
       (set): RelatedImagesState => ({
         images: null,
@@ -31,9 +31,7 @@ const useImageDetailStore = (query: RelatedImageQuery): ImageDetailResponse => {
         error: null
       })
     )
-    // Register cleanup
-    const init = { ...useStore.getState() }
-    registry.useRelatedImagesStore = () => useStore.setState({ ...init })
+    // No need to register cleanup, this store will be discarded on dismount
     return useStore
   }, [])
   const { id, images, loading, error } = useStore()
@@ -71,4 +69,4 @@ const useImageDetailStore = (query: RelatedImageQuery): ImageDetailResponse => {
   return { id: query.id, images, loading, error, refetch }
 }
 
-export default useImageDetailStore
+export default useRelatedImagesStore

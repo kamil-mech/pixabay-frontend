@@ -129,13 +129,13 @@ const MetaTableContainer = styled.div`
 
 const RelatedImagesSection = ({ imageDetails }: ImageDetailsProps): JSX.Element => {
   const lgDown = useMediaQueryStore(state => state.lgDown)
-  const { images, loading, error, refetch } = useRelatedImagesStore({
+  const { images, ...network } = useRelatedImagesStore({
     id: imageDetails.id,
     tags: imageDetails.tags.split(', ').slice(0, 3)
   })
   return (
     <RelatedImages>
-      <Loader loading={loading} error={error} retry={refetch}>
+      <Loader {...network}>
         {images &&
           <HorizontalImageGrid
             startingWidth={300}
@@ -148,14 +148,14 @@ const RelatedImagesSection = ({ imageDetails }: ImageDetailsProps): JSX.Element 
 }
 
 const SponsoredImagesSection = ({ imageDetails }: ImageDetailsProps): JSX.Element => {
-  const { images, loading, error, refetch } = useRelatedImagesStore({
+  const { images, ...network } = useRelatedImagesStore({
     id: imageDetails.id,
     tags: imageDetails.tags.split(', ').slice(0, 1),
     sponsored: true
   })
   return (
     <SponsoredImages>
-      <Loader loading={loading} error={error} retry={refetch}>
+      <Loader {...network}>
         {images &&
           <HorizontalImageGrid
             startingWidth={300}
@@ -260,11 +260,11 @@ const DetailsBody = styled.div`
 const ImageDetailsPage = (): JSX.Element => {
   const match = useRouteMatch<AppMatch>()
   const id = +(match.params.photoSlug?.split('-').reverse()[0] ?? '')
-  const { loading, error, imageDetails, refetch } = useImageDetailStore({ id })
+  const { imageDetails, ...network } = useImageDetailStore({ id })
   return (
     <HomeLayout>
       <DetailsBody>
-        <Loader loading={loading} error={error} retry={refetch}>
+        <Loader {...network}>
           {imageDetails && <ImageDetailsContent imageDetails={imageDetails} />}
         </Loader>
       </DetailsBody>

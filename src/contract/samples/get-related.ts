@@ -7,7 +7,6 @@ const fixture = {
     request: {
       url: '/api?key=6473511-0417f2cad683f1bee54cafe15&page=1&per_page=25&q=buddha%2Bstatue%2Bmonument'
     },
-    faultyResponse: new Error('Request failed with status code 404'),
     response: [
       {
         id: 5868759,
@@ -578,12 +577,12 @@ const fixture = {
       }
     ]
   },
+  // Cause: invalid key
   error: {
     webUrl: '/photos/nowhere-999999999999999999999999999999999999/',
     request: {
-      url: '/api?key=999999999999999999999999999999999999&q=budda%2Bstatue%2Bmonument'
+      url: '/api?key=1111111-1111111111111111111111111&q=budda%2Bstatue%2Bmonument'
     },
-    faultyResponse: new Error('Request failed with status code 400'),
     response: new Error('Request failed with status code 400')
   }
 }

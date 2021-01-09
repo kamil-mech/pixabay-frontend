@@ -7,7 +7,6 @@ const fixture = {
     request: {
       url: '/api?id=5868759&key=6473511-0417f2cad683f1bee54cafe15'
     },
-    faultyResponse: new Error('Request failed with status code 404'),
     response: [{
       id: 5868759,
       pageURL: 'https://pixabay.com/photos/buddha-statue-monument-buddhism-5868759/',
@@ -36,12 +35,12 @@ const fixture = {
       imageURL: 'https://pixabay.com/get/53e8d34b4d57a514ea898279c02b327f1422dfe352517148752a7ed2.jpg'
     }]
   },
+  // Cause: invalid key
   error: {
     webUrl: '/photos/nowhere-999999999999999999999999999999999999/',
     request: {
-      url: '/api?id=999999999999999999999999999999999999&key=6473511-0417f2cad683f1bee54cafe15'
+      url: '/api?id=999999999999999999999999999999999999&key=1111111-1111111111111111111111111'
     },
-    faultyResponse: new Error('Request failed with status code 400'),
     response: new Error('Request failed with status code 400')
   }
 }

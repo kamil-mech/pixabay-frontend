@@ -118,6 +118,7 @@ interface HorizontalImageGridProps {
   maxRows?: number
 }
 
+// FIXME: optimize by caching existing images and rows when new ones are inserted on subsequent rerenders
 const HorizontalImageGrid = (props: HorizontalImageGridProps): JSX.Element => {
   const { t } = useTranslation()
   const { startingWidth, images, thresholdHeight, maxRows } = props
@@ -129,7 +130,7 @@ const HorizontalImageGrid = (props: HorizontalImageGridProps): JSX.Element => {
     if (ref.current) setWidth(ref.current.getBoundingClientRect().width)
   }, [setWidth])
 
-  // Recalculature on resize - there's probably some room for optimization here
+  // Recalculate on resize - there's probably some room for optimization here
   useEffect(() => {
     const listener = throttle((): void => {
       setWidth(ref?.current?.getBoundingClientRect().width ?? startingWidth ?? 300)

@@ -41,29 +41,31 @@ Project Day 0
     [x] Document architectural decisions
     [x] Investigate MSW infinite loop inside Storybook when fetching <img src="/favicon.png" />
         * Library is broken in a circular way, used a bypass header to bail out
-        * This was definitely in top hardest things I had to debug\
-[ ] Add precommit hooks
-[ ] PXB-2 Landing page * https://kmech.atlassian.net/browse/PXB-2
-    [ ] Fetch images from Pixabay API
+        * This was definitely in top hardest things I had to debug
+    [-] Fix HMR in storybook conflicting with MSW
+        * Looks like this has nothing to do with MSW:
+        * https://github.com/storybookjs/presets/issues/177
+        [x] Try SB5 and/or CRA3
+            * Still doesn't work
+[x] PXB-3 Image page * https://kmech.atlassian.net/browse/PXB-3
+    [x] Fetch images from Pixabay API
         * Pixabay API documentation: https://pixabay.com/api/docs/
         * Pixabay Key: 6473511-0417f2cad683f1bee54cafe15
-    [ ] Setup grid layout for images (like http://www.pixabay.com)
-    [ ] Paginate results (page numbers or infinite scroll or other)
-[x] PXB-3 Image page * https://kmech.atlassian.net/browse/PXB-3
+    [x] Setup grid layout for images (like http://www.pixabay.com)
     [x] Display target image (bigger version)
     [x] Display details (photographer, tags, views, downloads, size)
     [x] Display sponsored and related images
-[ ] Gold plating
-    [ ] Self initializing fakes
-    [ ] Search bar
-    [ ] Hydrate buttons and links
-    [ ] Cover icons in the tests using alt text
-    [ ] Consider using non-english strings in the tests to better enforce usage of i18n
-[-] Fix HMR in storybook conflicting with MSW
-    * Looks like this has nothing to do with MSW:
-    * https://github.com/storybookjs/presets/issues/177
-    [x] Try SB5 and/or CRA3
-        * Still doesn't work
+[x] PXB-2 Landing page * https://kmech.atlassian.net/browse/PXB-2
+    [x] Fetch and display images
+    [x] Paginate results (page numbers or infinite scroll or other)
+[-] Gold plating
+    * Let's ship already
+    [-] Self initializing fakes
+    [-] Search bar
+    [-] Hydrate buttons and links
+    [-] Cover icons in the tests using alt text
+    [-] Consider using non-english strings in the tests to better enforce usage of i18n
+    [-] Add precommit hooks
 [ ] Draw architectural diagram
 [ ] Flag bugs found in production
     [ ] Flag to PXB that the burger menu icon and the search icon are cropped at the edges
