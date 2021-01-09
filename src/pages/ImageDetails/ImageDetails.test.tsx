@@ -38,7 +38,6 @@ test('renders image details content', async () => {
     ], { caseSensitive: true })
 
     // Sidebar
-    const { imageWidth, imageHeight } = getSingle.success.response[0]
     expectOrder(screen, [
       'travelphotographer',
       'Coffee', 'Follow',
@@ -51,7 +50,7 @@ test('renders image details content', async () => {
       'Like Pixabay on Facebook',
       'Related Images',
       'Image Type', 'JPG',
-      'Resolution', `${imageWidth}x${imageHeight}`,
+      'Resolution', '3264x4928',
       'Views', '4423',
       'Downloads', '2641'
     ])
@@ -116,7 +115,6 @@ test('handles retry', async () => {
     ], { caseSensitive: true })
 
     // Sidebar
-    const { imageWidth, imageHeight } = getSingle.success.response[0]
     expectOrder(screen, [
       'travelphotographer',
       'Coffee', 'Follow',
@@ -129,7 +127,7 @@ test('handles retry', async () => {
       'Like Pixabay on Facebook',
       'Related Images',
       'Image Type', 'JPG',
-      'Resolution', `${imageWidth}x${imageHeight}`,
+      'Resolution', '3264x4928',
       'Views', '4423',
       'Downloads', '2641'
     ])
@@ -143,14 +141,9 @@ test('filters out self from related and sponsored images', async () => {
     route: getSingle.webRoute
   })
   render(<RenderTest><ImageDetails/> </RenderTest>)
-  await waitOneTick()
-  // @ts-expect-error
-  window.eyjafjallajokull = 'YOLO'
   await waitFor(() => {
     expect(screen.queryByText(/Loading\.\.\./i)).toBeNull()
   })
-  // @ts-expect-error
-  window.eyjafjallajokull = undefined
   const all = screen.getAllByAltText('Buddha Statue Monument')
   expect(all.length).toEqual(1)
 })

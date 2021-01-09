@@ -6,6 +6,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Usage
 
+Before starting, copy `.env.sample` to `.env` and populate those variables appropriately
+```
+cp .env.sample .env
+```
+
 ### `npm run proxy`
 
 Sets up a local proxy backend. Running this is required.

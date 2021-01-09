@@ -44,6 +44,8 @@ interface ResizedImage {
   scaledImageWidth: number
   // Additional multiplier to be used to ensure images fill 100% row width
   upscaleRef: UpscaleRef
+  // This can be considered debug info
+  itemPadding: number
 }
 interface Rows {
   rows: ResizedImage[][]
@@ -66,6 +68,7 @@ export const computeSpace = (maxWidth: number, images: ImageDetails[], threshold
   // Note this does not account for padding,
   // because later we use this var for upscaling
   let totalWidth = 0
+  let totalPadding = 0
   // All images are shipped with a ref to post-calculatory multiplier
   // It is impossible to know its value in middle of traversal
   // And it would be overkill to traverse entire collection again just to update
@@ -81,9 +84,10 @@ export const computeSpace = (maxWidth: number, images: ImageDetails[], threshold
     const heightToWidthVector = image.imageWidth / image.imageHeight
     // e.g. an image with aspect ratio 1.5 (300x200) would require 240 width to reach 160 height
     const scaledImageWidth = heightToWidthVector * thresholdHeight
-    const spaceBetweens = rows[rows.length - 1].length - 1
-    const totalPadding = gridSpacing * spaceBetweens
-    if (totalWidth + gridSpacing + scaledImageWidth > maxWidth) {
+    // Grid spacing should be conditional, because the first
+    // item does not have anything to space away from
+    let itemPadding = totalWidth > 0 ? gridSpacing : 0
+    if (totalWidth + totalPadding + itemPadding + scaledImageWidth > maxWidth) {
       // If this image would cause overflow, "flush" current row
       // by assigning final multiplier - to be used for stretching to 100% container width
       const upscale = (maxWidth - totalPadding) / totalWidth
@@ -95,11 +99,14 @@ export const computeSpace = (maxWidth: number, images: ImageDetails[], threshold
         return { rows }
       }
       totalWidth = 0
+      itemPadding = 0
+      totalPadding = 0
       rows.push([])
     }
     totalWidth += scaledImageWidth
+    totalPadding += itemPadding
     // @ts-expect-error (not sure why typescript infers type never)
-    rows[rows.length - 1].push({ image, scaledImageWidth, upscaleRef })
+    rows[rows.length - 1].push({ image, scaledImageWidth, upscaleRef, itemPadding })
   }
   return { rows }
 }

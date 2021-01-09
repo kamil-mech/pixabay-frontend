@@ -9,10 +9,9 @@ test.only('renders metadata', async () => {
   const [RenderTest] = setupTestRenderer()
   render(<RenderTest><ImageMetaTable imageDetails={getSingle.success.response[0]}></ImageMetaTable></RenderTest>)
   await waitOneTick()
-  const { imageWidth, imageHeight } = getSingle.success.response[0]
   expectOrder(screen, [
     'Image Type', 'JPG',
-    'Resolution', `${imageWidth}x${imageHeight}`,
+    'Resolution', '3264x4928',
     'Views', '4423',
     'Downloads', '2641'
   ])
