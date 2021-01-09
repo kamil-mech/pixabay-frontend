@@ -1,82 +1,89 @@
 import { useCallback, useEffect } from 'react'
-import create, { State, UseStore } from 'zustand'
+import create, { State } from 'zustand'
 import axios from 'axios'
 import queryString from 'query-string'
 import getSingle from 'contract/samples/get-single'
 
 import { registry } from 'store/registry'
 
-interface ImageDetailRecord {
-  [key: string]: UseStore<ImageDetailState>
-}
-const details: ImageDetailRecord = {}
-
 export type ImageDetails = typeof getSingle.success.response[0]
 interface ImageDetailState extends State {
-  id: string
+  id: number
   imageDetails: ImageDetails | null
   loading: boolean
   error: Error | null
 }
 
+const cache: Record<string, ImageDetails> = {}
+
+const useStore = create<ImageDetailState>(
+  (set): ImageDetailState => ({
+    id: 0,
+    imageDetails: null,
+    loading: false,
+    error: null
+  })
+)
+
 // Register cleanup
+const init = { ...useStore.getState() }
 registry.useImageDetailStore = () => {
-  for (const key in details) {
-    details[key].destroy()
+  for (const key in cache) {
     // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-    delete details[key]
+    delete cache[key]
   }
+  useStore.setState({ ...init })
 }
 
 interface ImageQuery {
-  id: string
+  id: number
 }
 type ImageDetailResponse = ImageDetailState & {
   refetch: () => void
 }
 const useImageDetailStore = (query: ImageQuery): ImageDetailResponse => {
-  // Create a microstore per image
-  // This allows us to do shallow updates
-  // instead of abusing spread for nested keys
-  if (!details[query.id]) {
-    details[query.id] = create<ImageDetailState>(
-      (set): ImageDetailState => ({
-        id: query.id,
-        imageDetails: null,
-        loading: false,
-        error: null
-      })
-    )
-  }
-  const useImageStore = details[query.id]
-  const { imageDetails: imageDetail, loading, error } = useImageStore()
+  const { imageDetails, loading, error } = useStore()
+
   useEffect(() => {
     if (!query.id) return
-    // Fire request on empty
     (async () => {
-      if (!imageDetail && !loading && !error) {
-        useImageStore.setState({ loading: true })
+      // Serve from cache or refetch
+      if (imageDetails && query.id !== imageDetails.id) {
+        const fromCache = cache[query.id]
+        return useStore.setState({
+          id: query.id,
+          imageDetails: fromCache || null,
+          loading: false,
+          error: null
+        })
+      }
+      // Fire request on empty
+      if (!imageDetails && !loading && !error) {
+        useStore.setState({ loading: true })
         const apiToken = process.env.REACT_APP_API_TOKEN ?? ''
         const response = (await axios.get('/api?' + queryString.stringify({
           key: apiToken,
           id: query.id
         })))
-        useImageStore.setState({ imageDetails: response.data[0], loading: false })
+        cache[query.id] = response.data[0]
+        useStore.setState({ imageDetails: response.data[0], loading: false })
       }
     })().catch(e => {
-      useImageStore.setState({ error: e, loading: false })
+      useStore.setState({ error: e, loading: false })
     })
-  }, [error, imageDetail, loading, query.id, useImageStore])
+  }, [error, imageDetails, loading, query.id])
 
   // Wipe to refire request
   const refetch = useCallback(() => {
-    useImageStore.setState({
+    useStore.setState({
       imageDetails: null,
       loading: false,
       error: null
     })
-  }, [useImageStore])
-  return { id: query.id, imageDetails: imageDetail, loading, error, refetch }
+  }, [])
+
+  if (imageDetails && imageDetails.id !== query.id) return { ...init, refetch }
+  return { id: query.id, imageDetails, loading, error, refetch }
 }
 
 export default useImageDetailStore

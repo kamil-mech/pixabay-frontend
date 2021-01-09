@@ -30,7 +30,7 @@ http.createServer(async (req, res) => {
   try {
     const qs = req.url.split('?')[1] || ''
     pxbRes = (await axios.get(`${endpoint}?${qs}`)).data
-    console.log(fid, { totalHits: pxbRes.totalHits })
+    console.log(fid, { totalHits: pxbRes.totalHits, returned: pxbRes.hits.length })
   } catch (e) {
     console.error(fid, e.message.split('\n')[0])
     if (e.response) {

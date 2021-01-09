@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -48,6 +48,8 @@ const AuthorActionables = styled.div`
   margin-top: -2px;
 `
 
+export const fallbackImage = 'https://pixabay.com/static/img/profile_image_dummy.svg'
+
 interface AuthorSectionProps {
   imageDetails: ImageDetails
 }
@@ -55,9 +57,10 @@ const AuthorSection = ({ imageDetails }: AuthorSectionProps): JSX.Element => {
   const palette = useTheme().palette
   const { t } = useTranslation()
   const { userImageURL, user, user_id: userId } = imageDetails
+  const [src, setSrc] = useState(userImageURL)
   return (
     <Wrapper>
-      <Avatar src={userImageURL} />
+      <Avatar src={src} onError={() => setSrc(fallbackImage)} alt={user} />
       <AuthorActionables>
         <Link to={`/users/${user}-${userId}`}>
           <AnimatedLink h6 color={palette.darkEmphasis}>

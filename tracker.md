@@ -49,11 +49,12 @@ Project Day 0
         * Pixabay Key: 6473511-0417f2cad683f1bee54cafe15
     [ ] Setup grid layout for images (like http://www.pixabay.com)
     [ ] Paginate results (page numbers or infinite scroll or other)
-[~] PXB-3 Image page * https://kmech.atlassian.net/browse/PXB-3
+[x] PXB-3 Image page * https://kmech.atlassian.net/browse/PXB-3
     [x] Display target image (bigger version)
     [x] Display details (photographer, tags, views, downloads, size)
-    [ ] Display sponsored and related images
+    [x] Display sponsored and related images
 [ ] Gold plating
+    [ ] Self initializing fakes
     [ ] Search bar
     [ ] Hydrate buttons and links
     [ ] Cover icons in the tests using alt text
@@ -66,7 +67,7 @@ Project Day 0
 [ ] Draw architectural diagram
 [ ] Flag bugs found in production
     [ ] Flag to PXB that the burger menu icon and the search icon are cropped at the edges
-    [ ] Notify PBX that their sprite map (sprites.svg?2) is pulled like 100 times on https://pixabay.com/images/search/?order=ec
+    [ ] Notify PXB that their sprite map (sprites.svg?2) is pulled like 100 times on https://pixabay.com/images/search/?order=ec
 
 # Appendix (observations, things I learned and reading TODOs)
 - Be careful of accidentally nesting routers, causes hard to find bugs

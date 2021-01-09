@@ -15,34 +15,63 @@ export default meta
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  > * + * {
+    margin-left: ${({ theme }) => theme.spacing(2)}px;
+  }
+`
+const Column = styled.div`
+  display: flex;
   flex-direction: column;
   > * + * {
-    margin-top: 16px;
+    margin-top: ${({ theme }) => theme.spacing(2)}px;
   }
 `
 export const Default = (): JSX.Element => {
   return (
     <Wrapper>
-      <div>
-        Variant: Primary
-        <Button>Upload</Button>
-      </div>
-      <div>
-        Variant: Secondary
-        <Button secondary>Upload</Button>
-      </div>
-      <div>
-        Variant: Tertiary
-        <Button tertiary>Upload</Button>
-      </div>
-      <div>
+      <Column>
+        <div>
+        Color variant: Primary
+          <Button>Upload</Button>
+        </div>
+        <div>
+        Color variant: Secondary
+          <Button secondary>Upload</Button>
+        </div>
+        <div>
+        Color variant: Tertiary
+          <Button tertiary>Upload</Button>
+        </div>
+        <div>
+        Color variant: Outlined
+          <Button outlined>Upload</Button>
+        </div>
+      </Column>
+      <Column>
+        <div>
+        Size variant: Small
+          <Button small>Upload</Button>
+        </div>
+        <div>
+        Size variant: Large
+          <Button large>Upload</Button>
+        </div>
+        <div>
+        Text variant: Bold
+          <Button bold>Upload</Button>
+        </div>
+      </Column>
+      <Column>
+        <div>
         Front Adornment:
-        <Button frontAdornment={<UploadIcon />}>Upload</Button>
-      </div>
-      <div>
+          <Button frontAdornment={<UploadIcon />}>Upload</Button>
+        </div>
+        <div>
         Background Adornment:
-        <Button backAdornment={<UploadIcon />}>Upload</Button>
-      </div>
+          <Button backAdornment={<UploadIcon />}>Upload</Button>
+        </div>
+      </Column>
     </Wrapper>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
-import { setupTestRenderer, expectOrder, faultyEndpoints } from 'test-utils'
+import { setupTestRenderer, expectOrder, faultyEndpoints, waitOneTick } from 'test-utils'
 import getSingle from 'contract/samples/get-single'
 import userEvent from '@testing-library/user-event'
 
@@ -133,4 +133,17 @@ test('handles retry', async () => {
     ])
   })
   expect(document.title).toBe('Buddha Statue Monument')
+})
+
+test('filters out self from related and sponsored images', async () => {
+  const [RenderTest] = setupTestRenderer({
+    url: getSingle.success.webUrl,
+    route: getSingle.webRoute
+  })
+  render(<RenderTest><ImageDetails/> </RenderTest>)
+  await waitFor(() => {
+    expect(screen.queryByText(/Loading\.\.\./i)).toBeNull()
+  })
+  const all = screen.getAllByAltText('Buddha Statue Monument')
+  expect(all.length).toEqual(1)
 })

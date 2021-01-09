@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next'
 import uniq from 'lodash.uniq'
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import styled, { ThemeProps, useTheme } from 'styled-components'
 
@@ -8,6 +8,7 @@ import { ImageDetails } from 'store/useImageDetailStore'
 import ReportIcon from 'icons/ReportIcon'
 import EditorsChoiceIcon from 'icons/EditorsChoiceIcon'
 import Text from 'atoms/Text'
+import { getImageSrcSet } from 'utils'
 
 const StyledEditorsChoiceIcon = styled.div`
   display: flex;
@@ -118,14 +119,14 @@ interface SizedImageProps {
   imageDetails: ImageDetails
 }
 const SizedImage = ({ imageDetails }: SizedImageProps): JSX.Element => {
+  const [forceOverlay, setForceOverlay] = useState(true)
   const palette = useTheme().palette
   const { t } = useTranslation()
   const {
     webformatWidth,
     webformatHeight,
     webformatURL,
-    tags,
-    largeImageURL
+    tags
   } = imageDetails
 
   // scale to max in one axis
@@ -139,18 +140,16 @@ const SizedImage = ({ imageDetails }: SizedImageProps): JSX.Element => {
     y: 720
   }
 
-  // Docs specify this image resource is always scaled to 1280
-  // https://pixabay.com/api/docs/
-  const maxHeightOnLarge = 1280
-  const srcSetDiff = maxHeightOnLarge / Math.max(webformatWidth, webformatHeight)
-
   const name = useMemo(() => getName(imageDetails, t), [imageDetails, t])
   const tagsArr = tags.split(', ')
   return (
     <SizedImageContainer
       maxWidth={dimensions.x}
-      maxHeight={dimensions.y}>
-      <ImageOverlay>
+      maxHeight={dimensions.y}
+      onMouseLeave={() => setForceOverlay(false)}>
+      <ImageOverlay
+        style={forceOverlay ? { opacity: 1 } : {}}
+        data-testid="overlay">
         <StyledEditorsChoiceIcon>
           <EditorsChoiceIcon/>
         </StyledEditorsChoiceIcon>
@@ -166,7 +165,7 @@ const SizedImage = ({ imageDetails }: SizedImageProps): JSX.Element => {
         </ReportShade>
       </ImageOverlay>
       <Image
-        srcSet={`${webformatURL} 1x, ${largeImageURL} ${srcSetDiff.toFixed(3)}x`}
+        srcSet={getImageSrcSet(imageDetails)}
         src={webformatURL ?? ''} alt={name}>
       </Image>
     </SizedImageContainer>

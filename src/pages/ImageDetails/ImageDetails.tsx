@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { TFunction } from 'i18next'
-import uniq from 'lodash.uniq'
 import styled, { ThemeProps, useTheme } from 'styled-components'
 import { useRouteMatch } from 'react-router-dom'
 
 import Text from 'atoms/Text'
 import HomeLayout from 'templates/HomeLayout'
 import useImageDetailStore, { ImageDetails } from 'store/useImageDetailStore'
+import useRelatedImagesStore from 'store/useRelatedImagesStore'
 import Button from 'atoms/Button'
 import DownloadIcon from 'icons/DownloadIcon'
 import useMediaQueryStore from 'store/useMediaQueryStore'
@@ -17,30 +16,19 @@ import FBLike from 'atoms/FBLike'
 import SocialActions from 'molecules/SocialActions'
 import AuthorSection from 'molecules/AuthorSection'
 import SizedImage from 'molecules/SizedImage'
-
-const capitalize = (str: string): string => {
-  const [head, ...tail] = str
-  return head.toUpperCase() + tail.join('')
-}
-
-const getName = (imageDetails: ImageDetails | null, t: TFunction): string => {
-  if (!imageDetails) return ''
-  return uniq(imageDetails.tags.replace(/, /gi, ' ').split(' ')).slice(0, 3).map(str => {
-    return capitalize(t(str))
-  }).join(' ')
-}
+import Loader from 'atoms/Loader'
+import HorizontalImageGrid from 'atoms/HorizontalImageGrid'
+import { getImageName } from 'utils'
 
 const ImageDetailsWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
   > * + * {
     margin-left: ${({ theme }) => theme.spacing(7)}px;
   }
   ${({ theme }) => theme.breakpoints.lgDown} {
     flex-direction: column;
-    flex-wrap: nowrap;
     && > * {
       width: 100%;
       margin-left: 0;
@@ -52,6 +40,7 @@ const ImageDetailsWrapper = styled.div`
 `
 
 const ImageSpace = styled.div`
+  width: 100%;
   height: 100%;
   flex-grow: 1;
   display: flex;
@@ -88,18 +77,15 @@ const LicenseCard = styled(Card)`
     margin-top: ${({ theme }) => theme.spacing(2)}
   }
 `
-const RelatedImagesPlaceholder = styled(Card)`
+const RelatedImages = styled(Card)`
   width: 100%;
-  height: 303px;
   justify-content: center;
   align-items: center;
-  ${({ theme }) => theme.breakpoints.lgDown} {
-    height: 474px;
-  }
 `
-const SponsoredImagesPlaceholder = styled(Card)`
+const SponsoredImages = styled.div`
   width: 100%;
-  height: 136px;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 `
@@ -141,6 +127,46 @@ const MetaTableContainer = styled.div`
   }
 `
 
+const RelatedImagesSection = ({ imageDetails }: ImageDetailsProps): JSX.Element => {
+  const lgDown = useMediaQueryStore(state => state.lgDown)
+  const { images, loading, error, refetch } = useRelatedImagesStore({
+    id: imageDetails.id,
+    tags: imageDetails.tags.split(', ').slice(0, 3)
+  })
+  return (
+    <RelatedImages>
+      <Loader loading={loading} error={error} retry={refetch}>
+        {images &&
+          <HorizontalImageGrid
+            startingWidth={300}
+            images={images}
+            thresholdHeight={lgDown ? 150 : 80}
+            maxRows={3} />}
+      </Loader>
+    </RelatedImages>
+  )
+}
+
+const SponsoredImagesSection = ({ imageDetails }: ImageDetailsProps): JSX.Element => {
+  const { images, loading, error, refetch } = useRelatedImagesStore({
+    id: imageDetails.id,
+    tags: imageDetails.tags.split(', ').slice(0, 1),
+    sponsored: true
+  })
+  return (
+    <SponsoredImages>
+      <Loader loading={loading} error={error} retry={refetch}>
+        {images &&
+          <HorizontalImageGrid
+            startingWidth={300}
+            images={images}
+            thresholdHeight={120}
+            maxRows={1} />}
+      </Loader>
+    </SponsoredImages>
+  )
+}
+
 interface ImageDetailsProps {
   imageDetails: ImageDetails
 }
@@ -152,7 +178,7 @@ const ImageDetailsContent = ({ imageDetails }: ImageDetailsProps): JSX.Element =
   const { t } = useTranslation()
   const palette = useTheme().palette
   const lgDown = useMediaQueryStore(state => state.lgDown)
-  const name = useMemo(() => getName(imageDetails, t), [imageDetails, t])
+  const name = useMemo(() => getImageName(imageDetails, t), [imageDetails, t])
   useEffect(() => {
     document.title = name
   }, [name])
@@ -191,10 +217,7 @@ const ImageDetailsContent = ({ imageDetails }: ImageDetailsProps): JSX.Element =
           </Text>
         </div>
         <SpacedColumn spacing={4}>
-          <SponsoredImagesPlaceholder>
-            <Text>Image Section</Text>
-            <Text>Coming Soon</Text>
-          </SponsoredImagesPlaceholder>
+          <SponsoredImagesSection imageDetails={imageDetails} />
           {!lgDown && FlexibleSection}
         </SpacedColumn>
       </ImageSpace>
@@ -217,10 +240,7 @@ const ImageDetailsContent = ({ imageDetails }: ImageDetailsProps): JSX.Element =
           <Card small>
             <Text sub>{t('related-images')}</Text>
           </Card>
-          <RelatedImagesPlaceholder>
-            <Text>{t('image-section')}</Text>
-            <Text>{t('coming-soon')}</Text>
-          </RelatedImagesPlaceholder>
+          <RelatedImagesSection imageDetails={imageDetails} />
         </SpacedColumn>
         <Card>
           <MetaTableContainer>
@@ -239,17 +259,14 @@ const DetailsBody = styled.div`
 
 const ImageDetailsPage = (): JSX.Element => {
   const match = useRouteMatch<AppMatch>()
-  const id = match.params.photoSlug?.split('-').reverse()[0] ?? ''
+  const id = +(match.params.photoSlug?.split('-').reverse()[0] ?? '')
   const { loading, error, imageDetails, refetch } = useImageDetailStore({ id })
-  const { t } = useTranslation()
   return (
     <HomeLayout>
       <DetailsBody>
-        { error
-          ? <button onClick={refetch}>{`${t('error')}. ${t('try-again')}`}</button>
-          : loading || !imageDetails ? <Text>{`${t('loading')}...`}</Text> : (
-            <ImageDetailsContent imageDetails={imageDetails} />
-          )}
+        <Loader loading={loading} error={error} retry={refetch}>
+          {imageDetails && <ImageDetailsContent imageDetails={imageDetails} />}
+        </Loader>
       </DetailsBody>
     </HomeLayout>
   )
