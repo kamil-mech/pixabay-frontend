@@ -168,6 +168,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.1.0",
+    "gh-pages": "^3.1.0",
     "msw": "^0.24.4",
     "prettier": "^2.2.1",
     "prettier-config-standard": "^1.0.1",
