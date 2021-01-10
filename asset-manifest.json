@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "https://kamil-mech.github.io/pixabay-frontend/static/js/main.936a3e2b.chunk.js",
-    "main.js.map": "https://kamil-mech.github.io/pixabay-frontend/static/js/main.936a3e2b.chunk.js.map",
-    "runtime-main.js": "https://kamil-mech.github.io/pixabay-frontend/static/js/runtime-main.a65fad55.js",
-    "runtime-main.js.map": "https://kamil-mech.github.io/pixabay-frontend/static/js/runtime-main.a65fad55.js.map",
-    "static/js/2.22baca16.chunk.js": "https://kamil-mech.github.io/pixabay-frontend/static/js/2.22baca16.chunk.js",
-    "static/js/2.22baca16.chunk.js.map": "https://kamil-mech.github.io/pixabay-frontend/static/js/2.22baca16.chunk.js.map",
-    "index.html": "https://kamil-mech.github.io/pixabay-frontend/index.html",
-    "static/js/2.22baca16.chunk.js.LICENSE.txt": "https://kamil-mech.github.io/pixabay-frontend/static/js/2.22baca16.chunk.js.LICENSE.txt"
+    "main.js": "/pixabay-frontend/static/js/main.b649d936.chunk.js",
+    "main.js.map": "/pixabay-frontend/static/js/main.b649d936.chunk.js.map",
+    "runtime-main.js": "/pixabay-frontend/static/js/runtime-main.8ca7ade9.js",
+    "runtime-main.js.map": "/pixabay-frontend/static/js/runtime-main.8ca7ade9.js.map",
+    "static/js/2.08525d16.chunk.js": "/pixabay-frontend/static/js/2.08525d16.chunk.js",
+    "static/js/2.08525d16.chunk.js.map": "/pixabay-frontend/static/js/2.08525d16.chunk.js.map",
+    "index.html": "/pixabay-frontend/index.html",
+    "static/js/2.08525d16.chunk.js.LICENSE.txt": "/pixabay-frontend/static/js/2.08525d16.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.a65fad55.js",
-    "static/js/2.22baca16.chunk.js",
-    "static/js/main.936a3e2b.chunk.js"
+    "static/js/runtime-main.8ca7ade9.js",
+    "static/js/2.08525d16.chunk.js",
+    "static/js/main.b649d936.chunk.js"
   ]
 }
