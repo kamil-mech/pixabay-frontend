@@ -5,6 +5,8 @@ import { Redirect, Route } from 'react-router-dom'
 import { AppWrapper } from 'App'
 import { Screen, waitFor } from '@testing-library/dom'
 import { rest } from 'msw'
+import getLatest from 'contract/samples/get-latest'
+import getHeroImage from 'contract/samples/get-hero-image'
 import getSingle from 'contract/samples/get-single'
 import getRelated from 'contract/samples/get-related'
 import getRelatedSponsored from 'contract/samples/get-related-sponsored'
@@ -64,6 +66,7 @@ export const faultyEndpoints = {
     simulateFaultyAPI = false
   }
 }
+const faultyResponse = new Error('Request failed with status code 404')
 export const mockedAPIs = [
   // Used by jsdom unit tests
   rest.get('/locales/en/translation.json', async (req, res, ctx) => {
@@ -71,6 +74,10 @@ export const mockedAPIs = [
   }),
   rest.get('/api', async (req, res, ctx) => {
     const endPoints = [
+      getHeroImage.success,
+      getHeroImage.error,
+      ...getLatest.success.pages,
+      getLatest.error,
       getSingle.success,
       getSingle.error,
       getRelated.success,
@@ -80,7 +87,7 @@ export const mockedAPIs = [
     ]
     for (const endpoint of endPoints) {
       if (req.url.toString().includes(endpoint.request.url)) {
-        if (simulateFaultyAPI) throw endpoint.faultyResponse
+        if (simulateFaultyAPI) throw faultyResponse
         if (endpoint.response instanceof Error) {
           throw endpoint.response
         }

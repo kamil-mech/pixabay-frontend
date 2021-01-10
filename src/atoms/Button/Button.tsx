@@ -61,6 +61,7 @@ interface ButtonProps {
   frontAdornment?: JSX.Element
   // Can be used to place icons after text
   backAdornment?: JSX.Element
+  onClick?: () => void
   children: React.ReactNode
 }
 const Button = ({
@@ -72,7 +73,8 @@ const Button = ({
   large,
   bold,
   frontAdornment,
-  backAdornment
+  backAdornment,
+  onClick
 }: ButtonProps): JSX.Element => {
   const palette = useTheme().palette
   const bgColor = secondary
@@ -87,6 +89,7 @@ const Button = ({
     large={large}
     small={small}
     outlined={outlined}
+    onClick={onClick}
   >
     {frontAdornment}
     <Text

@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 import { setupTestRenderer, expectOrder, waitOneTick } from 'test-utils'
+import userEvent from '@testing-library/user-event'
 
 import Button from './Button'
 
@@ -13,8 +14,9 @@ test('renders content', async () => {
       <span />
     </React.Fragment>
   )
+  const handleClick = jest.fn()
   render(<RenderTest>
-    <Button frontAdornment={<Icon />} backAdornment={<Icon />}>
+    <Button onClick={handleClick} frontAdornment={<Icon />} backAdornment={<Icon />}>
       Click Me
     </Button>
   </RenderTest>)
@@ -24,4 +26,6 @@ test('renders content', async () => {
     'Click Me',
     'Icon'
   ])
+  userEvent.click(screen.getByText(/Click me/i), { button: 0 })
+  expect(handleClick).toHaveBeenCalled()
 })

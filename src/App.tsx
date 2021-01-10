@@ -3,6 +3,7 @@ import { Route, Router, Switch } from 'react-router-dom'
 import { History, createBrowserHistory } from 'history'
 import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import getSingle from 'contract/samples/get-single'
+import getLatest from 'contract/samples/get-latest'
 
 import Home from 'pages/Home'
 import ImageDetails from 'pages/ImageDetails'
@@ -71,7 +72,7 @@ export const AppContent = (): JSX.Element => {
       <Route exact path={getSingle.webRoute}>
         <ImageDetails/>
       </Route>
-      <Route exact path="/">
+      <Route exact path={getLatest.webRoute}>
         <Home/>
       </Route>
       <Route path="*">

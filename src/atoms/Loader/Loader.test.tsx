@@ -10,7 +10,7 @@ test('renders loading spinner', async () => {
   const props = {
     error: null,
     loading: true,
-    retry: () => {}
+    refetch: () => {}
   }
   render(<RenderTest><Loader {...props}>Foo</Loader></RenderTest>)
   await waitOneTick()
@@ -22,14 +22,14 @@ test('handles error with retry', async () => {
   const props = {
     error: new Error('Failed to fetch'),
     loading: false,
-    retry: jest.fn()
+    refetch: jest.fn()
   }
   render(<RenderTest><Loader {...props}>Foo</Loader></RenderTest>)
   await waitOneTick()
   const retryButton = screen.getByText(/Error. Try Again/i)
   expect(retryButton).toBeInTheDocument()
   userEvent.click(retryButton, { button: 0 })
-  expect(props.retry).toHaveBeenCalled()
+  expect(props.refetch).toHaveBeenCalled()
 })
 
 test('handles success', async () => {
@@ -37,7 +37,7 @@ test('handles success', async () => {
   const props = {
     error: null,
     loading: false,
-    retry: jest.fn()
+    refetch: jest.fn()
   }
   render(<RenderTest><Loader {...props}>Foo</Loader></RenderTest>)
   await waitOneTick()

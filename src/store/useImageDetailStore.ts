@@ -51,7 +51,7 @@ const useImageDetailStore = (query: ImageQuery): ImageDetailResponse => {
       if (imageDetails && query.id !== imageDetails.id) {
         const fromCache = cache[query.id]
         return useStore.setState({
-          id: query.id,
+          id: fromCache ? query.id : imageDetails.id,
           imageDetails: fromCache || null,
           loading: false,
           error: null

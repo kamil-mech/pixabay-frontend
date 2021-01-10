@@ -19,16 +19,16 @@ const Wrapper = styled.div`
   }
 `
 export const Default = (): JSX.Element => {
-  const s1 = { loading: true, error: null, retry: () => {} }
+  const s1 = { loading: true, error: null, refetch: () => {} }
   const [s2, setS2] = useState({ loading: false, error: new Error('Failed to fetch') })
   // @ts-expect-error
-  s2.retry = () => {
+  s2.refetch = () => {
     // @ts-expect-error
     setS2(s1)
     // @ts-expect-error
     setTimeout(() => setS2(s3), 200)
   }
-  const s3 = { loading: false, error: null, retry: () => {} }
+  const s3 = { loading: false, error: null, refetch: () => {} }
   return (
     <Wrapper>
       <div>

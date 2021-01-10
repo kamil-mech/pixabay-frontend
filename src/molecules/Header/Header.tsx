@@ -11,6 +11,14 @@ import useMediaQueryStore from 'store/useMediaQueryStore'
 import BurgerIcon from 'icons/BurgerIcon'
 import { maxContainerWidth } from 'atoms/Container'
 
+const lightOnHover = `
+  cursor: pointer;
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 0.7;
+  }
+`
+
 const HeaderWrapper = styled.header`
   width: 100%;
   height: 60px;
@@ -24,6 +32,9 @@ const StyledHeaderTabs = styled.div`
   display: flex;
   align-items: center;
   padding-left: 3px;
+  > * {
+    ${lightOnHover};
+  }
   > * + * {
     margin-left: calc(${({ theme }) => theme.spacing(4)}px + 2px);
   }
@@ -57,6 +68,9 @@ const StyledHeaderActions = styled.div`
   display: flex;
   align-items: center;
   padding-right: 4px;
+  > *:not(button) {
+    ${lightOnHover};
+  }
   > * + * {
     margin-left: calc(${({ theme }) => theme.spacing(2)}px + 2px);
   }
