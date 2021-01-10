@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/pixabay-frontend/static/js/main.0613785f.chunk.js",
-    "main.js.map": "/pixabay-frontend/static/js/main.0613785f.chunk.js.map",
+    "main.js": "/pixabay-frontend/static/js/main.ed9580be.chunk.js",
+    "main.js.map": "/pixabay-frontend/static/js/main.ed9580be.chunk.js.map",
     "runtime-main.js": "/pixabay-frontend/static/js/runtime-main.8ca7ade9.js",
     "runtime-main.js.map": "/pixabay-frontend/static/js/runtime-main.8ca7ade9.js.map",
-    "static/js/2.3cfe9831.chunk.js": "/pixabay-frontend/static/js/2.3cfe9831.chunk.js",
-    "static/js/2.3cfe9831.chunk.js.map": "/pixabay-frontend/static/js/2.3cfe9831.chunk.js.map",
+    "static/js/2.dc98f77c.chunk.js": "/pixabay-frontend/static/js/2.dc98f77c.chunk.js",
+    "static/js/2.dc98f77c.chunk.js.map": "/pixabay-frontend/static/js/2.dc98f77c.chunk.js.map",
     "index.html": "/pixabay-frontend/index.html",
-    "static/js/2.3cfe9831.chunk.js.LICENSE.txt": "/pixabay-frontend/static/js/2.3cfe9831.chunk.js.LICENSE.txt"
+    "static/js/2.dc98f77c.chunk.js.LICENSE.txt": "/pixabay-frontend/static/js/2.dc98f77c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8ca7ade9.js",
-    "static/js/2.3cfe9831.chunk.js",
-    "static/js/main.0613785f.chunk.js"
+    "static/js/2.dc98f77c.chunk.js",
+    "static/js/main.ed9580be.chunk.js"
   ]
 }

@@ -446,5 +446,5 @@ background-color: ${({theme:e})=>e.palette.lightEmphasis};
     font-family: "Open Sans Bold";
     src: url("mem5YaGs126MiZpBA-UN7rgOUuhp.woff2");
   }
-`,zt=Object(p.a)({basename:"/pixabay-frontend"}),Wt=({history:e=zt,children:t})=>Object(i.jsxs)(h.a,{theme:F,children:[Object(i.jsx)(Mt,{}),Object(i.jsx)(l.b,{history:e,children:t})]}),Dt=()=>Object(i.jsxs)(l.c,{children:[Object(i.jsx)(l.a,{exact:!0,path:f.webRoute,children:Object(i.jsx)(Ut,{})}),Object(i.jsx)(l.a,{exact:!0,path:j.webRoute,children:Object(i.jsx)(Me,{})}),Object(i.jsx)(l.a,{path:"*",children:Object(i.jsx)(Lt,{})})]});n.a.defaults.baseURL="https://cors-anywhere.herokuapp.com/https://pixabay.com/",r.a.render(Object(i.jsx)(s.a.StrictMode,{children:Object(i.jsx)(Wt,{children:Object(i.jsx)(Dt,{})})}),document.getElementById("root"))}},[[85,1,2]]]);
-//# sourceMappingURL=main.0613785f.chunk.js.map
+`,zt=Object(p.a)({basename:"/pixabay-frontend"}),Wt=({history:e=zt,children:t})=>Object(i.jsxs)(h.a,{theme:F,children:[Object(i.jsx)(Mt,{}),Object(i.jsx)(l.b,{history:e,children:t})]}),Dt=()=>Object(i.jsxs)(l.c,{children:[Object(i.jsx)(l.a,{exact:!0,path:f.webRoute,children:Object(i.jsx)(Ut,{})}),Object(i.jsx)(l.a,{exact:!0,path:j.webRoute,children:Object(i.jsx)(Me,{})}),Object(i.jsx)(l.a,{path:"*",children:Object(i.jsx)(Lt,{})})]});n.a.defaults.baseURL="https://pixabay-backend.herokuapp.com",r.a.render(Object(i.jsx)(s.a.StrictMode,{children:Object(i.jsx)(Wt,{children:Object(i.jsx)(Dt,{})})}),document.getElementById("root"))}},[[85,1,2]]]);
+//# sourceMappingURL=main.ed9580be.chunk.js.map
