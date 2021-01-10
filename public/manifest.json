@@ -1,0 +1,15 @@
+{
+  "short_name": "Pixabay",
+  "name": "1.9 million+ Stunning Free Images to Use Anywhere - Pixabay",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "32x32 24x24 16x16",
+      "type": "image/png"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
